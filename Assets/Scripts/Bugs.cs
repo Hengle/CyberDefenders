@@ -30,6 +30,7 @@ public class Bugs : MonoBehaviour
         yield return wait;
         nav.SetDestination(target.transform.position);
     }
+
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Hardrive")) {
             if (boom != null) {
@@ -43,6 +44,7 @@ public class Bugs : MonoBehaviour
             
 
         }
+
          Destroy(gameObject);
     }
 }

@@ -12,7 +12,7 @@ public class DefenseUnit : MonoBehaviour
     private void Awake() {
         GetComponent<Button>().onClick.AddListener(IconClick);
     }
-    
+
     private void IconClick() {
         if (unitSelected != null) {
             unitSelected(unit);

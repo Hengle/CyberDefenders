@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.2850269, g: 0.3713935, b: 0.49601045, a: 1}
+  m_IndirectSpecularColor: {r: 0.28502697, g: 0.37139347, b: 0.49601266, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 358898358}
   - component: {fileID: 358898357}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Tool2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -816,7 +816,7 @@ GameObject:
   - component: {fileID: 585745923}
   - component: {fileID: 585745922}
   m_Layer: 5
-  m_Name: Image (5)
+  m_Name: Tool6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 691656679}
   - component: {fileID: 691656678}
   m_Layer: 5
-  m_Name: Image (4)
+  m_Name: Tool5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1169,7 +1169,7 @@ GameObject:
   - component: {fileID: 740439973}
   - component: {fileID: 740439972}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: Tool4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1475,7 +1475,7 @@ GameObject:
   - component: {fileID: 965082593}
   - component: {fileID: 965082592}
   m_Layer: 5
-  m_Name: Image (6)
+  m_Name: Tool7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1861,7 +1861,7 @@ GameObject:
   - component: {fileID: 1361803760}
   - component: {fileID: 1361803759}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: Tool3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2093,15 +2093,15 @@ MonoBehaviour:
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 51
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Tools
 --- !u!222 &1625897145
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2122,7 +2122,7 @@ GameObject:
   - component: {fileID: 1645872603}
   - component: {fileID: 1645872602}
   m_Layer: 5
-  m_Name: Image (7)
+  m_Name: Tool8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2395,7 +2395,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.5565376, y: 0.00000025321236, z: -0.0000004156717, w: 0.83082247}
+  m_LocalRotation: {x: 0.5565376, y: 0.00000034474792, z: -0.000000476988, w: 0.83082247}
   m_LocalPosition: {x: 3.775331, y: 10.0575075, z: -5.126523}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2697,7 +2697,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745809910}
-  m_LocalRotation: {x: 0.5565376, y: 0.00000025321236, z: -0.0000004156717, w: 0.83082247}
+  m_LocalRotation: {x: 0.5565376, y: 0.00000034474792, z: -0.000000476988, w: 0.83082247}
   m_LocalPosition: {x: 3.775331, y: 10.0575075, z: -5.126523}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3145,7 +3145,7 @@ PrefabInstance:
     - target: {fileID: 867748986042715492, guid: 3604a3fa57081b844a934edaf0860811,
         type: 3}
       propertyPath: m_Name
-      value: Image
+      value: FirewallUnit
       objectReference: {fileID: 0}
     - target: {fileID: 867748986042715492, guid: 3604a3fa57081b844a934edaf0860811,
         type: 3}

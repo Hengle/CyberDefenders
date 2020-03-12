@@ -6,16 +6,17 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] private GameObject unit;
     [SerializeField] private Camera cam;
-    // Start is called before the first frame update
+
+    private GameManager gm;
+
     private void Awake() {
         DefenseUnit.unitSelected += SetUnit;
     }
     void Start()
     {
-        
+        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) {
@@ -27,7 +28,9 @@ public class PlayerInput : MonoBehaviour
         unit = selectedUnit;
     }
     private void PlaceUnit() {
-        if (unit != null) {
+        if (unit != null && gm.currency >= 100) {
+            gm.currency -= 100; //"currency"
+
             Vector3 position = GetMousePosition();
             //position.z = 10;
             //position =Camera.main.ScreenToWorldPoint(position);
