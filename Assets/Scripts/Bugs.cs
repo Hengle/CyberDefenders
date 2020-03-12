@@ -10,6 +10,8 @@ public class Bugs : MonoBehaviour
     [SerializeField] private GameObject boom;
     [SerializeField] private int attackPower;
 
+    private GameManager gm;
+
     public static event UnityAction<int> damage;
     private void Awake() {
         nav = GetComponent<NavMeshAgent>();
@@ -17,6 +19,7 @@ public class Bugs : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         StartCoroutine(WaitToStart());
     }
 
@@ -32,19 +35,30 @@ public class Bugs : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Hardrive")) {
-            if (boom != null) {
-                Instantiate(boom,transform.position,Quaternion.identity);
+        if (other.CompareTag("Hardrive"))
+        {
+            if (boom != null)
+            {
+                Instantiate(boom, transform.position, Quaternion.identity);
 
             }
-            
-            if (damage != null) {
+
+            if (damage != null)
+            {
                 damage(attackPower);
             }
-            
-
         }
 
-         Destroy(gameObject);
+        else if (other.CompareTag("FireWall"))
+        {
+            gm.currency += 100;
+            Destroy(gameObject);
+            Destroy(other);
+        }
+
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
