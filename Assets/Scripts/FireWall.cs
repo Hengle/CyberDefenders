@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class FireWall : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public int defense;
+
     void Start()
     {
-        
+        defense = 300;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            defense -= 100;
+        }
+
+        if (defense <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }    
 }

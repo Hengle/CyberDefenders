@@ -11,6 +11,7 @@ public class Bugs : MonoBehaviour
     [SerializeField] private int attackPower;
 
     private GameManager gm;
+    private FireWall fireWallUnit;
 
     public static event UnityAction<int> damage;
     private void Awake() {
@@ -40,25 +41,22 @@ public class Bugs : MonoBehaviour
             if (boom != null)
             {
                 Instantiate(boom, transform.position, Quaternion.identity);
-
             }
 
             if (damage != null)
             {
                 damage(attackPower);
             }
+
+            Destroy(gameObject);
         }
 
         else if (other.CompareTag("FireWall"))
         {
             gm.currency += 100;
             Destroy(gameObject);
-            Destroy(other);
-        }
-
-        else
-        {
-            Destroy(gameObject);
+            fireWallUnit = other.GetComponent<FireWall>();
+            fireWallUnit.defense -= 100;
         }
     }
 }
