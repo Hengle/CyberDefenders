@@ -702,8 +702,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currency: 0
+  enemiesDestroyed: 0
   videos:
-  - {fileID: 0}
+  - {fileID: 1577206148}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -3157,7 +3158,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.5565376, y: 0.00000034474792, z: -0.000000476988, w: 0.83082247}
+  m_LocalRotation: {x: 0.5565376, y: 0.00000025321236, z: -0.0000004156717, w: 0.83082247}
   m_LocalPosition: {x: 3.775331, y: 10.0575075, z: -5.126523}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3459,7 +3460,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745809910}
-  m_LocalRotation: {x: 0.5565376, y: 0.00000034474792, z: -0.000000476988, w: 0.83082247}
+  m_LocalRotation: {x: 0.5565376, y: 0.00000025321236, z: -0.0000004156717, w: 0.83082247}
   m_LocalPosition: {x: 3.775331, y: 10.0575075, z: -5.126523}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
