@@ -12,6 +12,7 @@ public class Bugs : MonoBehaviour
 
     private GameManager gm;
     private FireWall fireWallUnit;
+    private WaveManager wm;
 
     public static event UnityAction<int> damage;
     private void Awake() {
@@ -21,6 +22,7 @@ public class Bugs : MonoBehaviour
     void Start()
     {
         gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        wm = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
         StartCoroutine(WaitToStart());
     }
 
@@ -53,6 +55,7 @@ public class Bugs : MonoBehaviour
 
         else if (other.CompareTag("FireWall"))
         {
+            gm.enemiesDestroyed += 1;
             gm.currency += 100;
             Destroy(gameObject);
             fireWallUnit = other.GetComponent<FireWall>();

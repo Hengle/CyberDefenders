@@ -2,28 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveManager : MonoBehaviour {
+public class WaveManager : MonoBehaviour
+{
     [SerializeField] private Wave[] wave;
     [SerializeField] private GameObject spawnPoint;
     private int current;
 
+    private int waveNumber;
     public int Current { get => current; set { current = value; SetEnemyToSpawn(); } }
 
-    // Start is called before the first frame update
+    private GameManager gm;
+
     void Start() {
+        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+
         StartCoroutine(SpawnRate());
         current = 0;
+        waveNumber = 0;
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
     private IEnumerator SpawnRate() {
-        while (isActiveAndEnabled) {
-            YieldInstruction wait = new WaitForSeconds(wave[Current].SpawnRate);
-            yield return wait;
-            SpawnEnemy();
+        if (!gm.videos[waveNumber].isPlaying)
+        {
+            while (isActiveAndEnabled)
+            {
+                YieldInstruction wait = new WaitForSeconds(wave[Current].SpawnRate);
+                yield return wait;
+                SpawnEnemy();
+            }
         }
     }
     private GameObject SetEnemyToSpawn() {
