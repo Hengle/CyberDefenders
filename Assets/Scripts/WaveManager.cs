@@ -22,14 +22,11 @@ public class WaveManager : MonoBehaviour
     }
 
     private IEnumerator SpawnRate() {
-        if (!gm.videos[waveNumber].isPlaying)
+        while (isActiveAndEnabled)
         {
-            while (isActiveAndEnabled)
-            {
-                YieldInstruction wait = new WaitForSeconds(wave[Current].SpawnRate);
-                yield return wait;
-                SpawnEnemy();
-            }
+            YieldInstruction wait = new WaitForSeconds(wave[Current].SpawnRate);
+            yield return wait;
+            SpawnEnemy();
         }
     }
     private GameObject SetEnemyToSpawn() {

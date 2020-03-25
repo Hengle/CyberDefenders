@@ -11,14 +11,13 @@ public class GameManager : MonoBehaviour
     public int currency;
     public int Health { get => health; set { health = value; if (onHealth != null) { onHealth(health); } } }
     public int enemiesDestroyed;
+    private int[] upgradeLevel = new int[3]; //first - firewall, second - patch, third - anti virus
 
     private static GameManager instance;
     public static GameManager GetGameManager() => instance;
 
-    public VideoPlayer[] videos = new VideoPlayer[8];
-
     private void Awake() {
-        if (instance != null && instance != this) {
+        if (instance != null && instance != this){
             Destroy(gameObject);
         }
         else {
@@ -27,22 +26,68 @@ public class GameManager : MonoBehaviour
         Bugs.damage += GetDamage;
     }
 
-    private void Update()
-    {
-        if (enemiesDestroyed == 10)
-        {
-            videos[0].Play();
-        }
-    }
-
     void Start()
     {
         Health = 100;
-        currency = 500; //First Method
+        currency = 300; //First Method
     }
 
     private void GetDamage(int amount) {
         Debug.Log("Ouch");
         Health -= amount;
+    }
+
+    public void UpgradeFirewall()
+    {
+        if (upgradeLevel[0] < 1 && currency == 500)
+        {
+            upgradeLevel[0]++;
+        }
+
+        else if (upgradeLevel[0] < 2 && currency == 800)
+        {
+            upgradeLevel[0]++;
+        }
+
+        else if (upgradeLevel[0] < 3 && currency == 1000)
+        {
+            upgradeLevel[0]++;
+        }
+    }
+
+    public void UpgradePatch()
+    {
+        if (upgradeLevel[1] < 1 && currency == 500)
+        {
+            upgradeLevel[1]++;
+        }
+
+        else if (upgradeLevel[1] < 2 && currency == 800)
+        {
+            upgradeLevel[1]++;
+        }
+
+        else if (upgradeLevel[1] < 3 && currency == 1000)
+        {
+            upgradeLevel[1]++;
+        }
+    }
+
+    public void UpgradeAntiVirus()
+    {
+        if (upgradeLevel[2] < 1 && currency == 500)
+        {
+            upgradeLevel[2]++;
+        }
+
+        else if (upgradeLevel[2] < 2 && currency == 800)
+        {
+            upgradeLevel[2]++;
+        }
+
+        else if (upgradeLevel[2] < 3 && currency == 1000)
+        {
+            upgradeLevel[2]++;
+        }
     }
 }
