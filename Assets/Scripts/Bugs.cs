@@ -35,11 +35,13 @@ public class Bugs : MonoBehaviour
         YieldInstruction wait = new WaitForSeconds(1f);
         yield return wait;
         nav.SetDestination(target.transform.position);
+        Debug.Log("destination set");
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Hardrive"))
         {
+            Debug.Log("Hardrive hit");
             if (boom != null)
             {
                 Instantiate(boom, transform.position, Quaternion.identity);
@@ -55,8 +57,8 @@ public class Bugs : MonoBehaviour
 
         else if (other.CompareTag("FireWall"))
         {
-            gm.enemiesDestroyed += 1;
-            gm.currency += 100;
+            gm.EnemiesDestroyed += 1;
+            gm.Currency += 100;
             Destroy(gameObject);
             fireWallUnit = other.GetComponent<FireWall>();
             fireWallUnit.defense -= 100;

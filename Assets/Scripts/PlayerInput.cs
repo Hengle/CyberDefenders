@@ -28,8 +28,8 @@ public class PlayerInput : MonoBehaviour
         unit = selectedUnit;
     }
     private void PlaceUnit() {
-        if (unit != null && gm.currency >= 100) {
-            gm.currency -= 100; //"currency"
+        if (unit != null && gm.Currency >= 100) {
+            gm.Currency -= 100; //"currency"
 
             Vector3 position = GetMousePosition();
             //position.z = 10;
