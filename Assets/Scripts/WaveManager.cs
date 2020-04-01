@@ -29,6 +29,7 @@ public class WaveManager : MonoBehaviour
             SpawnEnemy();
         }
     }
+
     private GameObject SetEnemyToSpawn() {
         return wave[Current].Enemies[0];
     }

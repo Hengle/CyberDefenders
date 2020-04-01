@@ -26,11 +26,6 @@ public class Bugs : MonoBehaviour
         StartCoroutine(WaitToStart());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private IEnumerator WaitToStart() {
         YieldInstruction wait = new WaitForSeconds(1f);
         yield return wait;
@@ -41,7 +36,6 @@ public class Bugs : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Hardrive"))
         {
-            Debug.Log("Hardrive hit");
             if (boom != null)
             {
                 Instantiate(boom, transform.position, Quaternion.identity);
@@ -58,7 +52,7 @@ public class Bugs : MonoBehaviour
         else if (other.CompareTag("FireWall"))
         {
             gm.EnemiesDestroyed += 1;
-            gm.Currency += 100;
+            gm.Currency += 50;
             Destroy(gameObject);
             fireWallUnit = other.GetComponent<FireWall>();
             fireWallUnit.defense -= 100;
