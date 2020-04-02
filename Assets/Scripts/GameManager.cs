@@ -21,10 +21,24 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager GetGameManager() => instance;
 
+    //PopUp Add
+    public GameObject popUpAdd;
+    private float timerPopUp;
+
+    //Trojan Horse
+    public GameObject trojanHorseAdd;
+    private float timerTrojanHorse;
+    private bool left = false;
+    private bool right = true;
+    private bool notClicked = true;
+    private float timeToMove;
+
+    #region UI Text
     [SerializeField] private Text currencyText;
     [SerializeField] private Text firewallUpgradeText;
     [SerializeField] private Text patchUpgradeText;
     [SerializeField] private Text antivirusUpgradeText;
+    #endregion
 
     private void Awake() {
         if (instance != null && instance != this){
@@ -39,11 +53,70 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Health = 100;
-        Currency = 300; //First Method
+        Currency = 300;
+        timerPopUp = 40f;
+        timerTrojanHorse = 1f;
+        timeToMove = 15f;
     }
 
     private void Update()
     {
+        if (timerPopUp <= 0)
+        {
+            popUpAdd.SetActive(true);
+        }
+
+        else
+        {
+            timerPopUp -= Time.deltaTime;
+        }
+
+        if (timerTrojanHorse <= 0 && timeToMove >= 0)
+        {
+            trojanHorseAdd.SetActive(true);
+
+            if (right)
+            {
+                trojanHorseAdd.transform.Translate(Vector3.right * Time.deltaTime * 100);
+            }
+
+            if (left)
+            {
+                trojanHorseAdd.transform.Translate(Vector3.left * Time.deltaTime * 100);
+            }
+
+            timeToMove -= Time.deltaTime;
+        }
+
+        else if (timerTrojanHorse <= 0 && timeToMove <= 0)
+        {
+            if (notClicked)
+            {
+                currency += 300;
+            }
+
+            timerTrojanHorse = 5f;//Random.Range(30.0f, 60.0f);
+            timeToMove = 15f;
+            notClicked = true;
+
+            if (right)
+            {
+                right = false;
+                left = true;
+            }
+
+            else if (left)
+            {
+                right = true;
+                left = false;
+            }
+        }
+
+        else
+        {
+            timerTrojanHorse -= Time.deltaTime;
+        }
+
         currencyText.text = "Currency: " + currency.ToString();
 
         switch (upgradeLevel[0])
@@ -89,6 +162,49 @@ public class GameManager : MonoBehaviour
     private void GetDamage(int amount)
     {        
         Health -= amount;
+    }
+
+    public void popUp()
+    {
+        popUpAdd.SetActive(false);
+
+        if (currency <= 100)
+        {
+            currency = 0;
+        }
+
+        else
+        {
+            currency -= 100;
+        }
+
+        timerPopUp = Random.Range(30.0f, 60.0f);
+    }
+
+    public void closePopUp()
+    {
+        if (notClicked)
+        {
+            currency += 200;
+        }
+
+        popUpAdd.SetActive(false);
+        timerPopUp = Random.Range(30.0f, 60.0f);
+    }
+
+    public void trojanHorse()
+    {
+        if (currency <= 200)
+        {
+            currency = 0;
+        }
+
+        else
+        {
+            currency -= 200;
+        }
+
+        notClicked = false;
     }
 
     public void UpgradeFirewall()
