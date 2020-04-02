@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         Health = 100;
         Currency = 300;
         timerPopUp = 40f;
-        timerTrojanHorse = 1f;
+        timerTrojanHorse = 30f;
         timeToMove = 15f;
     }
 
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
                 currency += 300;
             }
 
-            timerTrojanHorse = 5f;//Random.Range(30.0f, 60.0f);
+            timerTrojanHorse = Random.Range(30.0f, 60.0f);
             timeToMove = 15f;
             notClicked = true;
 
