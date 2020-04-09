@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         Currency = 300;
         timerPopUp = 40f;
         timerTrojanHorse = 30f;
-        timeToMove = 15f;
+        timeToMove = 20f;
     }
 
     private void Update()
@@ -77,12 +77,12 @@ public class GameManager : MonoBehaviour
 
             if (right)
             {
-                trojanHorseAdd.transform.Translate(Vector3.right * Time.deltaTime * 100);
+                trojanHorseAdd.transform.Translate(Vector3.right * Time.deltaTime * 300);
             }
 
             if (left)
             {
-                trojanHorseAdd.transform.Translate(Vector3.left * Time.deltaTime * 100);
+                trojanHorseAdd.transform.Translate(Vector3.left * Time.deltaTime * 300);
             }
 
             timeToMove -= Time.deltaTime;
