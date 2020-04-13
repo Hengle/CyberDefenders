@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class FireWall : MonoBehaviour
 {
-    public int defense;
+    private int defense;
     private GameManager gm;
+
+    public int Defense { get => defense; set => defense = value; }
 
     void Start()
     {
-        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gm = GameManager.GetGameManager();
 
         switch (gm.upgradeLevel[0])
         {
             case 0:
-                defense = 300;
+                Defense = 300;
                 break;
             case 1:
-                defense = 400;
+                Defense = 400;
                 break;
             case 2:
-                defense = 500;
+                Defense = 500;
                 break;
         }
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        if (defense <= 0)
+        if (Defense <= 0)
         {
             Destroy(gameObject);
         }

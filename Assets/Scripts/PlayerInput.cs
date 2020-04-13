@@ -1,41 +1,72 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerInput : MonoBehaviour
-{
+using UnityEngine.Events;
+public class PlayerInput : MonoBehaviour {
     [SerializeField] private GameObject unit;
     [SerializeField] private Camera cam;
-
+    private bool paused;
+    private bool canSpawn;
     private GameManager gm;
 
+    public bool Paused {
+        get => paused; set {
+            paused = value; if (pause != null) {
+                pause(paused);
+            }
+        }
+    }
+
+    public static event UnityAction<bool> pause;
+    public static event UnityAction unitPlaced;
     private void Awake() {
         DefenseUnit.unitSelected += SetUnit;
     }
-    void Start()
-    {
-        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+    private void Start() {
+        gm = GameManager.GetGameManager(); ;
+
     }
 
-    void Update()
-    {
+    private void Update() {
+
+        PauseControls();
+        if (!Paused) {
+            GetInput();
+        }
+    }
+    private void GetInput() {
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("Click" +Input.mousePosition);
+            Debug.Log("Click" + Input.mousePosition);
             PlaceUnit();
         }
+
+    }
+    private void PauseControls() {
+        if (Input.GetButtonDown("Pause")) {
+            if (Paused) {
+                Paused = false;
+            }
+            else {
+                Paused = true;
+            }
+        }
+
     }
     private void SetUnit(GameObject selectedUnit) {
         unit = selectedUnit;
     }
     private void PlaceUnit() {
         if (unit != null && gm.Currency >= 100) {
-            gm.Currency -= 100; //"currency"
+             //"currency"
 
             Vector3 position = GetMousePosition();
-            //position.z = 10;
-            //position =Camera.main.ScreenToWorldPoint(position);
-            
-            Instantiate(unit,position , Quaternion.identity);
+            if (canSpawn) {
+                Instantiate(unit, position, Quaternion.identity);
+                if (unitPlaced != null) {
+                    unitPlaced();
+                }
+                gm.Currency -= 100;
+            }
         }
         else {
             Debug.Log("Nothing Selected");
@@ -45,9 +76,15 @@ public class PlayerInput : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
-            Debug.DrawLine(transform.position, hit.point);
+            Debug.Log(hit.collider.name);
+            if (hit.collider.CompareTag("Path")|| hit.collider.CompareTag("Malware")) {
+                canSpawn = true;
+            }
+            else {
+                canSpawn = false;
+            }
             return hit.point;
         }
-        return new Vector3(0,0,0);
+        return new Vector3(0, 0, 0);
     }
 }

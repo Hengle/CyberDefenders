@@ -7,20 +7,26 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Wave[] wave;
     [SerializeField] private GameObject spawnPoint;
     private int current;
-
+    private Coroutine spawn;
     private int waveNumber;
     public int Current { get => current; set { current = value; SetEnemyToSpawn(); } }
 
     private GameManager gm;
-
+    private static WaveManager instance;
+    public static WaveManager GetWaveManager() => instance;
     void Start() {
-        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-
-        StartCoroutine(SpawnRate());
+        gm = GameManager.GetGameManager();
+        UIManager.startGame += StartSpawning;
+        GameManager.stopSpawning += StopSpawning;
         current = 0;
         waveNumber = 0;
     }
-
+    private void StartSpawning() {
+        spawn=StartCoroutine(SpawnRate());
+    }
+    private void StopSpawning() {
+        StopCoroutine(spawn);
+    }
     private IEnumerator SpawnRate() {
         while (isActiveAndEnabled)
         {

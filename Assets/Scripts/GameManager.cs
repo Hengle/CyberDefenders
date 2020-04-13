@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private int health;
     private int currency;
-
+    private int level;
     public static event UnityAction<int> onHealth;
-    public int Health { get => health; set { health = Mathf.Clamp(value,0,300); if (onHealth != null) { onHealth(health); } } }
+    public static event UnityAction endGame;
+    public static event UnityAction stopEnemies;
+    public static event UnityAction stopSpawning;
+    public static event UnityAction<int> patchLevel;
+    public static event UnityAction<int> firewallLevel;
+    public static event UnityAction<int> antivirusLevel;
+    public static event UnityAction click;
+    public int Health { get => health; set { health = Mathf.Clamp(value,0,300);HealthCheck(health); if (onHealth != null) { onHealth(health); } } }
 
     public int Currency { get => currency; set => currency = value; }
     public int EnemiesDestroyed { get => enemiesDestroyed; set => enemiesDestroyed = value; }
@@ -47,16 +54,13 @@ public class GameManager : MonoBehaviour
         else {
             instance = this;
         }
-        Bugs.damage += GetDamage;
     }
 
     void Start()
     {
-        Health = 100;
-        Currency = 300;
-        timerPopUp = 40f;
-        timerTrojanHorse = 30f;
-        timeToMove = 20f;
+        Bugs.damage += GetDamage;
+        PlayerInput.pause += PauseControl;
+        UIManager.startGame += StartGame;
     }
 
     private void Update()
@@ -163,7 +167,59 @@ public class GameManager : MonoBehaviour
     {        
         Health -= amount;
     }
+    private void PauseControl(bool val) {
+        if (val) {
+            Time.timeScale = 0;
+        }
+        else {
+            Time.timeScale = 1;
+        }
+    }
+    private IEnumerator WaitToStopEnemies() {
+        YieldInstruction wait = new WaitForSeconds(0.1f);
+        yield return wait;
+        if (stopEnemies != null) {
+            stopEnemies();
+        }
+    }
+    private void HealthCheck(int health) {
+        if (health == 0) {
+            if (stopSpawning != null) {
+                stopSpawning();
+            }
+            SceneChange(0);
+            SceneManager.UnloadSceneAsync(1);
+            StartCoroutine(WaitToEnd());
+        }
+    }
+    private IEnumerator WaitToEnd() {
+        YieldInstruction wait = new WaitForSeconds(0.5f);
+        yield return wait;
+        if (endGame != null) {
+            endGame();
+        }
 
+    }
+    private void StartGame() {
+        Health = 100;
+        Currency = 300;
+        timerPopUp = 40f;
+        timerTrojanHorse = 30f;
+        timeToMove = 20f;
+        SceneManager.LoadSceneAsync(1,LoadSceneMode.Additive);
+        StartCoroutine(WaitToChange());
+        
+    }
+    private IEnumerator WaitToChange() {
+        YieldInstruction wait = new WaitForSeconds(2);
+       yield return wait;
+        SceneChange(1);
+
+    }
+    private void SceneChange(int sceneIndex) {
+        Scene scene = SceneManager.GetSceneByBuildIndex(sceneIndex);
+        SceneManager.SetActiveScene(scene);
+    }
     public void popUp()
     {
         popUpAdd.SetActive(false);
@@ -183,6 +239,9 @@ public class GameManager : MonoBehaviour
 
     public void closePopUp()
     {
+        if (click != null) {
+            click();
+        }
         if (notClicked)
         {
             currency += 200;
@@ -209,6 +268,12 @@ public class GameManager : MonoBehaviour
 
     public void UpgradeFirewall()
     {
+        if (click != null) {
+            click();
+        }
+        if (firewallLevel != null) {
+            firewallLevel(upgradeLevel[0]);
+        }
         if (upgradeLevel[0] < 1 && currency >= 500)
         {
             upgradeLevel[0]++;
@@ -230,6 +295,12 @@ public class GameManager : MonoBehaviour
 
     public void UpgradePatch()
     {
+        if (click != null) {
+            click();
+        }
+        if (patchLevel != null) {
+            patchLevel(upgradeLevel[1]);
+        }
         if (upgradeLevel[1] < 1 && currency >= 300)
         {
             upgradeLevel[1]++;
@@ -251,6 +322,12 @@ public class GameManager : MonoBehaviour
 
     public void UpgradeAntiVirus()
     {
+        if (click != null) {
+            click();
+        }
+        if (antivirusLevel != null) {
+            antivirusLevel(upgradeLevel[2]);
+        }
         if (upgradeLevel[2] < 1 && Currency >= 800)
         {
             upgradeLevel[2]++;

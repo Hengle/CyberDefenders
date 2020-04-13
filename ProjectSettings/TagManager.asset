@@ -7,6 +7,9 @@ TagManager:
   - Hardrive
   - FireWall
   - WaveManager
+  - Malware
+  - Patch
+  - Path
   layers:
   - Default
   - TransparentFX

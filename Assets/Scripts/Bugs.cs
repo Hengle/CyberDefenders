@@ -13,6 +13,7 @@ public class Bugs : MonoBehaviour
     private GameManager gm;
     private FireWall fireWallUnit;
     private WaveManager wm;
+    private bool dead;
 
     public static event UnityAction<int> damage;
     private void Awake() {
@@ -21,18 +22,46 @@ public class Bugs : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        wm = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
+        gm = GameManager.GetGameManager();
+        wm = WaveManager.GetWaveManager();
+        Botnet.speedUp += SpeedUp;
+        GameManager.stopEnemies+=Stop;
+        Hardrive.stopEnemies +=Dead;
         StartCoroutine(WaitToStart());
     }
 
     private IEnumerator WaitToStart() {
         YieldInstruction wait = new WaitForSeconds(1f);
         yield return wait;
-        nav.SetDestination(target.transform.position);
+        if (!dead&&!Hardrive.GetHardrive().Dead) {
+            nav.SetDestination(target.transform.position);
+        }
         Debug.Log("destination set");
     }
+    private IEnumerator RecalculatePath() {
+        YieldInstruction wait = new WaitForSeconds(4f);
+        while (isActiveAndEnabled) { 
+        yield return wait;
+        nav.SetDestination(target.transform.position);
+        }
+    }
+    private void SpeedUp(Bugs bug) {
+        if (bug == this) {nav.speed = 10;
+        Debug.Log("speed up!"); }
+        
+    }
+    private void Dead() {
 
+        dead = true;
+    }
+    private void Stop() {
+       StartCoroutine(WaitToStop());
+    }
+    private IEnumerator WaitToStop() {
+        YieldInstruction wait = new WaitForSeconds(0.1f);
+        yield return wait;
+        nav.SetDestination(transform.position);
+    }
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Hardrive"))
         {
@@ -55,7 +84,12 @@ public class Bugs : MonoBehaviour
             gm.Currency += 50;
             Destroy(gameObject);
             fireWallUnit = other.GetComponent<FireWall>();
-            fireWallUnit.defense -= 100;
+            fireWallUnit.Defense -= 100;
+        }
+        if (other.CompareTag("Patch")) {
+            
+            dead = true;
+            Destroy(gameObject);
         }
     }
 }
