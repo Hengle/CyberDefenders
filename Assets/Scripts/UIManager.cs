@@ -24,6 +24,9 @@ public class UIManager : MonoBehaviour
         GameManager.onHealth += OnHealthchange;
         PlayerInput.pause += PauseScreenControl;
         GameManager.endGame += DeadScreenControl;
+        GameManager.patchLevel += OnPatchLevelUp;
+        GameManager.firewallLevel += OnFirewallLevelUp;
+        GameManager.antivirusLevel += OnAntivirusLevelUp;
     }
 
     // Update is called once per frame
