@@ -12,6 +12,7 @@ public class Bugs : MonoBehaviour
 
     private GameManager gm;
     private FireWall fireWallUnit;
+    private Patch patchUnit;
     private WaveManager wm;
     private bool dead;
 
@@ -86,9 +87,33 @@ public class Bugs : MonoBehaviour
             fireWallUnit = other.GetComponent<FireWall>();
             fireWallUnit.Defense -= 100;
         }
-        if (other.CompareTag("Patch")) {
-            
-            dead = true;
+
+        else if (other.CompareTag("Patch"))
+        {
+            gm.EnemiesDestroyed += 1;
+            gm.Currency += 50;
+            Destroy(gameObject);
+            patchUnit = other.GetComponent<Patch>();
+            patchUnit.Defense -= 1;
+        }
+
+        if (other.CompareTag("Scan"))
+        {
+            if (gm.upgradeLevel[2] == 2)
+            {
+                gm.Currency += 150;
+            }
+
+            else if (gm.upgradeLevel[2] == 1)
+            {
+                gm.Currency += 100;
+            }
+
+            else
+            {
+                gm.Currency += 50;
+            }
+
             Destroy(gameObject);
         }
     }

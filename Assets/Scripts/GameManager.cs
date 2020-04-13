@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public static event UnityAction<int> firewallLevel;
     public static event UnityAction<int> antivirusLevel;
     public static event UnityAction click;
-    public int Health { get => health; set { health = Mathf.Clamp(value,0,300);HealthCheck(health); if (onHealth != null) { onHealth(health); } } }
+    public int Health { get => health; set { health = Mathf.Clamp(value, 0, 300); HealthCheck(health); if (onHealth != null) { onHealth(health); } } }
 
     public int Currency { get => currency; set => currency = value; }
     public int EnemiesDestroyed { get => enemiesDestroyed; set => enemiesDestroyed = value; }
@@ -35,8 +35,8 @@ public class GameManager : MonoBehaviour
     //Trojan Horse
     public GameObject trojanHorseAdd;
     private float timerTrojanHorse;
-    private bool left = false;
-    private bool right = true;
+    private bool trojanLeft = false;
+    private bool trojanRight = true;
     private bool notClicked = true;
     private float timeToMove;
 
@@ -45,10 +45,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text firewallUpgradeText;
     [SerializeField] private Text patchUpgradeText;
     [SerializeField] private Text antivirusUpgradeText;
+
+    //Level Text
+    [SerializeField] private Text firewallLevelText;
+    [SerializeField] private Text patchLevelText;
+    [SerializeField] private Text antivirusLevelText;
     #endregion
 
     private void Awake() {
-        if (instance != null && instance != this){
+        if (instance != null && instance != this) {
             Destroy(gameObject);
         }
         else {
@@ -79,12 +84,12 @@ public class GameManager : MonoBehaviour
         {
             trojanHorseAdd.SetActive(true);
 
-            if (right)
+            if (trojanRight)
             {
                 trojanHorseAdd.transform.Translate(Vector3.right * Time.deltaTime * 300);
             }
 
-            if (left)
+            if (trojanLeft)
             {
                 trojanHorseAdd.transform.Translate(Vector3.left * Time.deltaTime * 300);
             }
@@ -103,16 +108,16 @@ public class GameManager : MonoBehaviour
             timeToMove = 15f;
             notClicked = true;
 
-            if (right)
+            if (trojanRight)
             {
-                right = false;
-                left = true;
+                trojanRight = false;
+                trojanLeft = true;
             }
 
-            else if (left)
+            else if (trojanLeft)
             {
-                right = true;
-                left = false;
+                trojanRight = true;
+                trojanLeft = false;
             }
         }
 
@@ -127,12 +132,15 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 firewallUpgradeText.text = "Firewall\n Upgrade\n Cost: 500";
+                firewallLevelText.text = "Lv. 1";
                 break;
             case 1:
                 firewallUpgradeText.text = "Firewall\n Upgrade\n Cost: 800";
+                firewallLevelText.text = "Lv. 2";
                 break;
             case 2:
                 firewallUpgradeText.text = "Firewall\n Upgrade\n Cost: 1000";
+                firewallLevelText.text = "Lv. 3";
                 break;
         }
 
@@ -140,12 +148,15 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 patchUpgradeText.text = "Patch\n Upgrade\n Cost: 300";
+                patchLevelText.text = "Lv. 1";
                 break;
             case 1:
                 patchUpgradeText.text = "Patch\n Upgrade\n Cost: 500";
+                patchLevelText.text = "Lv. 1";
                 break;
             case 2:
                 patchUpgradeText.text = "Patch\n Upgrade\n Cost: 700";
+                patchLevelText.text = "Lv. 3";
                 break;
         }
 
@@ -153,18 +164,21 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 antivirusUpgradeText.text = "Antivirus\n Upgrade\n Cost: 800";
+                antivirusLevelText.text = "Lv. 1";
                 break;
             case 1:
                 antivirusUpgradeText.text = "Antivirus\n Upgrade\n Cost: 1000";
+                antivirusLevelText.text = "Lv. 2";
                 break;
             case 2:
                 antivirusUpgradeText.text = "Antivirus\n Upgrade\n Cost: 1200";
+                antivirusLevelText.text = "Lv. 3";
                 break;
         }
     }
 
     private void GetDamage(int amount)
-    {        
+    {
         Health -= amount;
     }
     private void PauseControl(bool val) {
@@ -202,17 +216,17 @@ public class GameManager : MonoBehaviour
     }
     private void StartGame() {
         Health = 100;
-        Currency = 300;
+        Currency = 500;
         timerPopUp = 40f;
         timerTrojanHorse = 30f;
         timeToMove = 20f;
-        SceneManager.LoadSceneAsync(1,LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         StartCoroutine(WaitToChange());
-        
+
     }
     private IEnumerator WaitToChange() {
         YieldInstruction wait = new WaitForSeconds(2);
-       yield return wait;
+        yield return wait;
         SceneChange(1);
 
     }

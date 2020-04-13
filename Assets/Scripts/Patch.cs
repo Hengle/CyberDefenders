@@ -25,15 +25,17 @@ public class Patch : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Defense == 0)
+        {
+            Destroy(gameObject);
+        }
     }
+
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Malware")) {
-            Defense--;
-            
+            Defense--;            
         }
     }
     

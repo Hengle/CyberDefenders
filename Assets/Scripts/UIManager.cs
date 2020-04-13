@@ -11,7 +11,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text fireWallLevel;
     [SerializeField] private Text patchLevel;
     [SerializeField] private Text antivirusLevel;
-    
+
+    private GameManager gm;
+
     public static event UnityAction startGame;
     public static event UnityAction click;
     private void Awake() {
@@ -20,7 +22,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         GameManager.onHealth += OnHealthchange;
         PlayerInput.pause += PauseScreenControl;
         GameManager.endGame += DeadScreenControl;

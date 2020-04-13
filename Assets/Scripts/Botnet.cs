@@ -7,9 +7,12 @@ public class Botnet : MonoBehaviour
     public static event UnityAction<Bugs> speedUp;
     private bool dead;
     [SerializeField]private GameObject spawner;
+    private GameManager gm;
+
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         GameManager.stopSpawning += KillTheBot;
         UIManager.startGame += StartGame;
     }
@@ -40,10 +43,25 @@ public class Botnet : MonoBehaviour
                 speedUp(other.GetComponent<Bugs>());
             }
         }
-        if (other.CompareTag("Patch")) {
+        if (other.CompareTag("Patch"))
+        {
+            gm.Currency += 100;
             Instantiate(spawner,transform.position,Quaternion.identity);
             dead = true;
             Destroy(gameObject,0.5f);
+        }
+
+        if (other.CompareTag("Scan") && gm.upgradeLevel[2] == 1)
+        {
+            if (gm.upgradeLevel[2] == 2)
+            {
+                gm.Currency += 100;
+            }
+
+            gm.Currency += 50;
+            Instantiate(spawner, transform.position, Quaternion.identity);
+            dead = true;
+            Destroy(gameObject, 0.5f);
         }
     }
     
