@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        CyberCriminal.damage += GetDamage;
         Bugs.damage += GetDamage;
         PlayerInput.pause += PauseControl;
         UIManager.startGame += StartGame;
@@ -218,14 +219,14 @@ public class GameManager : MonoBehaviour
         Health = 100;
         Currency = 500;
         timerPopUp = 40f;
-        timerTrojanHorse = 30f;
+        timerTrojanHorse = 50f;
         timeToMove = 20f;
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         StartCoroutine(WaitToChange());
 
     }
     private IEnumerator WaitToChange() {
-        YieldInstruction wait = new WaitForSeconds(2);
+        YieldInstruction wait = new WaitForSeconds(1f);
         yield return wait;
         SceneChange(1);
 

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+[RequireComponent(typeof(NavMeshAgent))]
 public class Bugs : MonoBehaviour
 {
     private NavMeshAgent nav;
     [SerializeField]private GameObject target;
     [SerializeField] private GameObject boom;
     [SerializeField] private int attackPower;
-
+    [SerializeField] private bool worm;
     private GameManager gm;
     private FireWall fireWallUnit;
     private Patch patchUnit;
@@ -47,8 +48,12 @@ public class Bugs : MonoBehaviour
         }
     }
     private void SpeedUp(Bugs bug) {
-        if (bug == this) {nav.speed = 10;
-        Debug.Log("speed up!"); }
+        if (!dead) {
+            if (bug == this) {nav.speed = 10;
+        ; }
+
+        }
+        
         
     }
     private void Dead() {
@@ -79,7 +84,7 @@ public class Bugs : MonoBehaviour
             Destroy(gameObject);
         }
 
-        else if (other.CompareTag("FireWall"))
+        else if (other.CompareTag("FireWall")&&!worm)
         {
             gm.EnemiesDestroyed += 1;
             gm.Currency += 50;

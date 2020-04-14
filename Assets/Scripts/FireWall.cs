@@ -26,7 +26,7 @@ public class FireWall : MonoBehaviour
                 break;
         }
     }
-
+    
     public void OnTriggerEnter(Collider other)
     {
         if (Defense <= 0)

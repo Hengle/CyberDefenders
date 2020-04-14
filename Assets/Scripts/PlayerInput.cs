@@ -36,7 +36,7 @@ public class PlayerInput : MonoBehaviour {
     }
     private void GetInput() {
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("Click" + Input.mousePosition);
+            
             PlaceUnit();
         }
 
@@ -76,8 +76,8 @@ public class PlayerInput : MonoBehaviour {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
-            Debug.Log(hit.collider.name);
-            if (hit.collider.CompareTag("Path")|| hit.collider.CompareTag("Malware")) {
+            
+            if (hit.collider.CompareTag("Path")||hit.collider.CompareTag("Malware")) {
                 canSpawn = true;
             }
             else {

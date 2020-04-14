@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
         antivirusLevel.text = "Lv: " + level.ToString();
     }
     private void PauseScreenControl(bool val) {
-        Debug.Log("pause screen up");
+        
         
         pauseScreen.SetActive(val);
     }
